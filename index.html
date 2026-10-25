@@ -746,6 +746,144 @@
       }
     }
 
+    /* phones and small tablets */
+    html {
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      overflow-x: hidden;
+      overflow-wrap: break-word
+    }
+
+    section[id],
+    form[id] {
+      scroll-margin-top: 84px
+    }
+
+    @media (max-width:640px) {
+      body {
+        font-size: 16px
+      }
+
+      .ribbon {
+        font-size: .76rem;
+        padding: 6px 14px;
+        text-align: left
+      }
+
+      header.bar {
+        position: static
+      }
+
+      header.bar .wrap {
+        gap: 4px 12px;
+        min-height: 0;
+        padding-block: 10px
+      }
+
+      .logo {
+        font-size: 1.3rem
+      }
+
+      /* logo and Enquire button share the first row, text links scroll on the second */
+      nav {
+        display: contents
+      }
+
+      nav .btn {
+        margin-left: auto;
+        width: auto
+      }
+
+      nav::before {
+        content: "";
+        order: 1;
+        flex-basis: 100%;
+        height: 0
+      }
+
+      nav a:not(.btn) {
+        order: 2;
+        padding: 10px 0;
+        margin-right: 6px
+      }
+
+      header.bar .wrap {
+        row-gap: 0
+      }
+
+      .hero {
+        padding-block: 32px 40px
+      }
+
+      .hero .sub {
+        font-size: 1.04rem
+      }
+
+      .hero .cta {
+        flex-direction: column
+      }
+
+      .hello div {
+        padding: 12px 14px
+      }
+
+      section {
+        padding-block: 36px
+      }
+
+      .head {
+        margin-bottom: 22px
+      }
+
+      .lang,
+      .course {
+        padding: 18px
+      }
+
+      .why {
+        gap: 28px
+      }
+
+      .why li {
+        grid-template-columns: 28px 1fr
+      }
+
+      .visit .cols {
+        gap: 28px
+      }
+
+      .pay {
+        padding: 16px
+      }
+
+      .pay .row {
+        flex-direction: column;
+        gap: 2px
+      }
+
+      .form {
+        padding: 20px 16px
+      }
+
+      .form input,
+      .form select,
+      .form textarea {
+        font-size: 16px;
+        min-height: 44px
+      }
+
+      footer .wrap {
+        flex-direction: column
+      }
+
+      footer a {
+        display: inline-block;
+        padding: 6px 0
+      }
+    }
+
     @media (prefers-reduced-motion:no-preference) {
       html {
         scroll-behavior: smooth
