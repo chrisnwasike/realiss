@@ -1,0 +1,959 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset=utf8>
+  <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <style>
+    :root {
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font: 14px -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      color: #000
+    }
+
+    img {
+      max-width: 100%
+    }
+
+    [hidden]:not([hidden=until-found i]) {
+      display: none !important
+    }
+  </style>
+</head>
+
+<body>
+  <title>Realiss Language School</title>
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap">
+  <style>
+    /* Layout: one long home page. Sticky bar, greeting-led hero, language cards, course cards, mission list, visit + pay + enquiry form, footer. */
+    :root {
+      --bg: #F6F8F9;
+      --surface: #FFFFFF;
+      --ink: #12232B;
+      --muted: #52666F;
+      --line: #DCE4E8;
+      --primary: #0B5563;
+      --primary-ink: #FFFFFF;
+      --accent: #E2552B;
+      --tint: #E3F0F2;
+      --band: #0B5563;
+      --band-ink: #F2FAFB;
+      --ok: #1E7A4C;
+      --ok-bg: #E2F3EA;
+      --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+      --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0E1A1F;
+        --surface: #15262D;
+        --ink: #EAF2F4;
+        --muted: #9DB2BA;
+        --line: #26404A;
+        --primary: #5CC0CF;
+        --primary-ink: #06242B;
+        --accent: #FF7A4D;
+        --tint: #173540;
+        --band: #0A2F38;
+        --band-ink: #E6F4F7;
+        --ok: #6FD1A0;
+        --ok-bg: #173A2B;
+        color-scheme: dark
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0E1A1F;
+      --surface: #15262D;
+      --ink: #EAF2F4;
+      --muted: #9DB2BA;
+      --line: #26404A;
+      --primary: #5CC0CF;
+      --primary-ink: #06242B;
+      --accent: #FF7A4D;
+      --tint: #173540;
+      --band: #0A2F38;
+      --band-ink: #E6F4F7;
+      --ok: #6FD1A0;
+      --ok-bg: #173A2B;
+      color-scheme: dark
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.55 var(--body);
+      padding-inline: 0
+    }
+
+    a {
+      color: inherit
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin-inline: auto;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px))
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--display);
+      line-height: 1.08;
+      margin: 0;
+      text-wrap: balance
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 4.2vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -.02em
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 700
+    }
+
+    p {
+      margin: 0
+    }
+
+    .eyebrow {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    section {
+      padding-block: 56px
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-family: var(--body)
+    }
+
+    .btn-p {
+      background: var(--accent);
+      color: #fff
+    }
+
+    .btn-p:hover {
+      filter: brightness(1.08)
+    }
+
+    .btn-o {
+      border-color: var(--ink);
+      color: var(--ink);
+      background: transparent
+    }
+
+    .btn-o:hover {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px
+    }
+
+    /* demo ribbon */
+    .ribbon {
+      background: var(--ink);
+      color: var(--bg);
+      font-size: .82rem;
+      text-align: center;
+      padding: 7px 16px
+    }
+
+    /* top bar */
+    header.bar {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 5;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line)
+    }
+
+    header.bar .wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-height: 64px;
+      flex-wrap: wrap;
+      padding-block: 8px
+    }
+
+    .logo {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1.45rem;
+      letter-spacing: -.02em;
+      text-decoration: none;
+      color: var(--primary)
+    }
+
+    .logo span {
+      color: var(--accent)
+    }
+
+    nav {
+      display: flex;
+      gap: 4px 22px;
+      flex-wrap: wrap;
+      margin-left: auto;
+      align-items: center
+    }
+
+    nav a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--muted)
+    }
+
+    nav a:hover {
+      color: var(--ink)
+    }
+
+    nav .btn {
+      padding: 9px 16px;
+      font-size: .92rem;
+      color: #fff
+    }
+
+    /* hero */
+    .hero {
+      padding-block: 48px 56px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 40px;
+      align-items: center
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 6.2vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -.03em
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary)
+    }
+
+    .hero .sub {
+      margin-top: 18px;
+      max-width: 34em;
+      color: var(--muted);
+      font-size: 1.12rem
+    }
+
+    .hero .cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px
+    }
+
+    .hello {
+      display: grid;
+      gap: 10px;
+      min-width: 0
+    }
+
+    .hello div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg)
+    }
+
+    .hello b {
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.1
+    }
+
+    .hello small {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap
+    }
+
+    .hello div:nth-child(1) b {
+      color: var(--primary)
+    }
+
+    .hello div:nth-child(2) b {
+      color: var(--accent)
+    }
+
+    /* languages */
+    .head {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 30px;
+      max-width: 44em
+    }
+
+    .head p {
+      color: var(--muted)
+    }
+
+    .grid4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px
+    }
+
+    .lang {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+      min-width: 0
+    }
+
+    .lang .glyph {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 2.6rem;
+      line-height: 1;
+      color: var(--primary)
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: var(--tint);
+      color: var(--primary);
+      width: max-content
+    }
+
+    .levels {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .levels span {
+      font-size: .82rem;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      padding: 2px 9px;
+      border-radius: 5px;
+      color: var(--muted)
+    }
+
+    /* courses */
+    .band {
+      background: var(--tint)
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .course {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0
+    }
+
+    .course .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px
+    }
+
+    .open {
+      font-size: .76rem;
+      font-weight: 700;
+      color: var(--ok);
+      background: var(--ok-bg);
+      padding: 3px 10px;
+      border-radius: 99px
+    }
+
+    .facts {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: .97rem
+    }
+
+    .facts div {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 6px
+    }
+
+    .facts b {
+      color: var(--ink);
+      font-weight: 600;
+      text-align: right
+    }
+
+    .fee {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1.9rem;
+      letter-spacing: -.02em;
+      margin-top: auto
+    }
+
+    .fee small {
+      display: block;
+      font-family: var(--body);
+      font-weight: 400;
+      font-size: .88rem;
+      color: var(--muted);
+      letter-spacing: 0
+    }
+
+    .more {
+      margin-top: 22px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted)
+    }
+
+    .more a {
+      font-weight: 700;
+      color: var(--primary)
+    }
+
+    /* why */
+    .why {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 44px;
+      align-items: start
+    }
+
+    .why ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0
+    }
+
+    .why li {
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px
+    }
+
+    .why li:last-child {
+      border-bottom: 1px solid var(--line)
+    }
+
+    .why li i {
+      font-style: normal;
+      font-family: var(--display);
+      font-weight: 800;
+      color: var(--accent)
+    }
+
+    .why li b {
+      display: block;
+      font-family: var(--display);
+      font-size: 1.12rem
+    }
+
+    .why li span {
+      color: var(--muted)
+    }
+
+    /* visit */
+    .visit {
+      background: var(--band);
+      color: var(--band-ink)
+    }
+
+    .visit .eyebrow {
+      color: #FFB49C
+    }
+
+    .visit .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px
+    }
+
+    .visit h2 {
+      margin-bottom: 16px
+    }
+
+    .visit .addr {
+      font-size: 1.1rem;
+      max-width: 28em
+    }
+
+    .visit dl {
+      margin: 20px 0 0;
+      display: grid;
+      gap: 12px
+    }
+
+    .visit dt {
+      font-size: .76rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: .75
+    }
+
+    .visit dd {
+      margin: 0;
+      font-weight: 600
+    }
+
+    .pay {
+      margin-top: 24px;
+      border: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: grid;
+      gap: 8px
+    }
+
+    .pay h3 {
+      font-size: 1.05rem
+    }
+
+    .pay p {
+      font-size: .97rem;
+      opacity: .92
+    }
+
+    .pay .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, .2);
+      padding-top: 8px;
+      font-size: .97rem
+    }
+
+    .form {
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 26px;
+      display: grid;
+      gap: 14px;
+      min-width: 0
+    }
+
+    .form h3 {
+      font-size: 1.4rem
+    }
+
+    .form label {
+      display: grid;
+      gap: 5px;
+      font-weight: 600;
+      font-size: .92rem
+    }
+
+    .form input,
+    .form select,
+    .form textarea {
+      font: inherit;
+      font-weight: 400;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--ink);
+      width: 100%;
+      min-width: 0
+    }
+
+    .form .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    .form .note {
+      font-size: .84rem;
+      color: var(--muted)
+    }
+
+    #sent {
+      display: none;
+      background: var(--ok-bg);
+      color: var(--ok);
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: .95rem
+    }
+
+    #sent.on {
+      display: block
+    }
+
+    footer {
+      padding-block: 34px;
+      font-size: .92rem;
+      color: var(--muted)
+    }
+
+    footer .wrap {
+      display: flex;
+      gap: 14px 28px;
+      flex-wrap: wrap;
+      justify-content: space-between
+    }
+
+    footer a {
+      text-decoration: none;
+      margin-right: 16px
+    }
+
+    footer a:hover {
+      color: var(--ink)
+    }
+
+    @media (max-width:900px) {
+      .grid4 {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .grid3 {
+        grid-template-columns: 1fr
+      }
+
+      .hero .wrap,
+      .why,
+      .visit .cols {
+        grid-template-columns: 1fr
+      }
+
+      .hero .wrap {
+        gap: 28px
+      }
+
+      nav {
+        margin-left: 0;
+        width: 100%;
+        gap: 4px 18px
+      }
+
+      section {
+        padding-block: 44px
+      }
+    }
+
+    @media (max-width:480px) {
+      .grid4 {
+        grid-template-columns: 1fr
+      }
+
+      .form .two {
+        grid-template-columns: 1fr
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center
+      }
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+      html {
+        scroll-behavior: smooth
+      }
+    }
+  </style>
+
+  <div class="ribbon">Design preview for Prof. C. Uchechukwu. Text, fees and address come from realiss.org today.
+    Photos, logo and colours are placeholders until brand files are supplied.</div>
+
+  <header class="bar">
+    <div class="wrap">
+      <a class="logo" href="#top">Real<span>iss</span></a>
+      <nav aria-label="Main">
+        <a href="#languages">Languages</a>
+        <a href="#courses">Courses</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-p" href="#enquire">Enquire now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Language school, Awka</p>
+          <h1 style="margin-top:12px">Come to <em>Realiss</em> and learn another language.</h1>
+          <p class="sub">German, Spanish, French and Chinese, taught by qualified teachers in a friendly, modern
+            building on the Enugu-Onitsha Expressway.</p>
+          <div class="cta">
+            <a class="btn btn-p" href="#courses">View courses</a>
+            <a class="btn btn-o" href="#enquire">Enquire now</a>
+          </div>
+        </div>
+        <div class="hello" aria-label="Hello in the four languages taught">
+          <div><b>Hallo</b><small>German</small></div>
+          <div><b>Hola</b><small>Spanish</small></div>
+          <div><b>Bonjour</b><small>French</small></div>
+          <div><b>你好</b><small>Chinese</small></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="languages">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">What you can learn</p>
+          <h2>Four languages, each with a recognised exam to aim for</h2>
+          <p>German, Spanish and French follow the Common European Framework (CEFR). Chinese follows the HSK modules,
+            with HSK certification as the target.</p>
+        </div>
+        <div class="grid4">
+          <article class="lang">
+            <div class="glyph">De</div>
+            <h3>German</h3><span class="badge">CEFR</span>
+            <div class="levels"><span>A1</span><span>A2</span><span>B1</span><span>B2</span></div>
+          </article>
+          <article class="lang">
+            <div class="glyph">Es</div>
+            <h3>Spanish</h3><span class="badge">CEFR</span>
+            <div class="levels"><span>A1</span><span>A2</span><span>B1</span><span>B2</span></div>
+          </article>
+          <article class="lang">
+            <div class="glyph">Fr</div>
+            <h3>French</h3><span class="badge">CEFR</span>
+            <div class="levels"><span>A1</span><span>A2</span><span>B1</span><span>B2</span></div>
+          </article>
+          <article class="lang">
+            <div class="glyph">中</div>
+            <h3>Chinese</h3><span class="badge">HSK</span>
+            <div class="levels"><span>HSK 1</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses" class="band">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Courses</p>
+          <h2>Pick the course that fits your week</h2>
+          <p>Fees are per language. We accept bank transfer only, no cash.</p>
+        </div>
+        <div class="grid3">
+          <article class="course">
+            <div class="top">
+              <h3>Ten Weeks Regular Course</h3><span class="open">Open</span>
+            </div>
+            <div class="facts">
+              <div>Starting level<b>A1 / HSK 1</b></div>
+              <div>Duration<b>10 weeks</b></div>
+            </div>
+            <div class="fee">₦150,000<small>per language</small></div>
+            <a class="btn btn-o" href="#enquire">Enquire about this</a>
+          </article>
+          <article class="course">
+            <div class="top">
+              <h3>Weekend Course for JS/SS Students</h3><span class="open">Open</span>
+            </div>
+            <div class="facts">
+              <div>Schedule<b>Weekends</b></div>
+              <div>Duration<b>8 months</b></div>
+            </div>
+            <div class="fee">₦160,000<small>per language</small></div>
+            <a class="btn btn-o" href="#enquire">Enquire about this</a>
+          </article>
+          <article class="course">
+            <div class="top">
+              <h3>Weekend Course for Adults</h3><span class="open">Open</span>
+            </div>
+            <div class="facts">
+              <div>Schedule<b>Weekends</b></div>
+              <div>Duration<b>8 months</b></div>
+            </div>
+            <div class="fee">₦160,000<small>per language</small></div>
+            <a class="btn btn-o" href="#enquire">Enquire about this</a>
+          </article>
+        </div>
+        <p class="more">Also: Evening Courses, Courses for Teachers, Executive Language Course and Elective Courses for
+          Higher Institutions. <a href="#enquire">Ask us for details</a></p>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap why">
+        <div class="head" style="margin:0">
+          <p class="eyebrow">Why Realiss</p>
+          <h2>What you get when you enrol</h2>
+          <p>Short courses and longer courses, for pupils, adults, teachers and professionals.</p>
+        </div>
+        <ol>
+          <li><i>1</i>
+            <div><b>Qualified teachers</b><span>Your lessons are taught by qualified teachers.</span></div>
+          </li>
+          <li><i>2</i>
+            <div><b>Courses you can afford</b><span>Cost-effective options for different kinds of learners.</span></div>
+          </li>
+          <li><i>3</i>
+            <div><b>A friendly, modern place to study</b><span>A friendly, modern environment to learn in.</span></div>
+          </li>
+          <li><i>4</i>
+            <div><b>All four skills</b><span>Effective methods for speaking, writing, reading and listening.</span>
+            </div>
+          </li>
+          <li><i>5</i>
+            <div><b>Support to your target level</b><span>Help to reach the proficiency level and certificate you are
+                aiming for.</span></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="contact" class="visit">
+      <div class="wrap cols">
+        <div>
+          <p class="eyebrow">Visit us</p>
+          <h2>Find us in Awka</h2>
+          <p class="addr">Muoka Plaza, along Enugu-Onitsha Expressway, opposite Solution Fun City by Kwata Junction,
+            Awka, Anambra State.</p>
+          <dl>
+            <div>
+              <dt>Email</dt>
+              <dd>info@realiss.org</dd>
+            </div>
+          </dl>
+          <div class="pay">
+            <h3>How to pay</h3>
+            <p>No cash payments. Pay by bank transfer, and in the narration state your language (German, Spanish, French
+              or Chinese) and your level.</p>
+            <div class="row"><span>Bank</span><b>Fidelity Bank</b></div>
+            <div class="row"><span>Account name</span><b>Realiss Language School, Awka</b></div>
+            <div class="row"><span>Account number</span><b>Set in the admin panel</b></div>
+          </div>
+        </div>
+        <form class="form" id="enquire" novalidate>
+          <h3>Send an enquiry</h3>
+          <label for="n">Full name<input id="n" autocomplete="name"></label>
+          <div class="two">
+            <label for="e">Email<input id="e" type="email" autocomplete="email"></label>
+            <label for="p">Phone<input id="p" type="tel" autocomplete="tel"></label>
+          </div>
+          <div class="two">
+            <label for="l">Language<select id="l">
+                <option>German</option>
+                <option>Spanish</option>
+                <option>French</option>
+                <option>Chinese</option>
+              </select></label>
+            <label for="c">Course<select id="c">
+                <option>Not sure yet</option>
+                <option>Ten Weeks Regular Course</option>
+                <option>Weekend Course for JS/SS Students</option>
+                <option>Weekend Course for Adults</option>
+                <option>Evening Courses</option>
+              </select></label>
+          </div>
+          <label for="m">Message<textarea id="m" rows="3"></textarea></label>
+          <button class="btn btn-p" type="submit">Send enquiry</button>
+          <p id="sent" role="status">Demo only: nothing was sent. On the live site this goes to the school's inbox and
+            is saved in the admin panel.</p>
+          <p class="note">Spam-protected. Your details are used only to reply to this enquiry.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div><a href="#languages">Languages</a><a href="#courses">Courses</a><a href="#about">About</a><a
+          href="#contact">Contact</a><a href="#top">Privacy Policy</a></div>
+      <div>© Realiss Language School, Awka</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('enquire').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      document.getElementById('sent').classList.add('on');
+    });
+  </script>
+
+</body>
+
+</html>
