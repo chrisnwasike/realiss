@@ -3,6 +3,7 @@
 
 <head>
   <meta charset=utf8>
+  <link rel="icon" type="image/webp" href="logo_small.webp">
   <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
   <style>
     :root {
@@ -57,57 +58,23 @@
   <style>
     /* Layout: one long home page. Sticky bar, greeting-led hero, language cards, course cards, mission list, visit + pay + enquiry form, footer. */
     :root {
-      --bg: #F6F8F9;
+      --bg: #F4F6FD;
       --surface: #FFFFFF;
-      --ink: #12232B;
-      --muted: #52666F;
-      --line: #DCE4E8;
-      --primary: #0B5563;
+      --ink: #14163F;
+      --muted: #55597F;
+      --line: #DCE0F1;
+      --primary: #2E3192;
       --primary-ink: #FFFFFF;
-      --accent: #E2552B;
-      --tint: #E3F0F2;
-      --band: #0B5563;
-      --band-ink: #F2FAFB;
+      --accent: #3AA0E0;
+      --accent-ink: #1B6DB3;
+      --sky: #8FD3F4;
+      --tint: #E7ECFB;
+      --band: #1F2275;
+      --band-ink: #F1F3FF;
       --ok: #1E7A4C;
       --ok-bg: #E2F3EA;
       --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
       --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
-    }
-
-    @media (prefers-color-scheme:dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #0E1A1F;
-        --surface: #15262D;
-        --ink: #EAF2F4;
-        --muted: #9DB2BA;
-        --line: #26404A;
-        --primary: #5CC0CF;
-        --primary-ink: #06242B;
-        --accent: #FF7A4D;
-        --tint: #173540;
-        --band: #0A2F38;
-        --band-ink: #E6F4F7;
-        --ok: #6FD1A0;
-        --ok-bg: #173A2B;
-        color-scheme: dark
-      }
-    }
-
-    :root[data-theme="dark"] {
-      --bg: #0E1A1F;
-      --surface: #15262D;
-      --ink: #EAF2F4;
-      --muted: #9DB2BA;
-      --line: #26404A;
-      --primary: #5CC0CF;
-      --primary-ink: #06242B;
-      --accent: #FF7A4D;
-      --tint: #173540;
-      --band: #0A2F38;
-      --band-ink: #E6F4F7;
-      --ok: #6FD1A0;
-      --ok-bg: #173A2B;
-      color-scheme: dark
     }
 
     * {
@@ -161,7 +128,7 @@
       font-weight: 700;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--accent)
+      color: var(--accent-ink)
     }
 
     section {
@@ -181,23 +148,24 @@
     }
 
     .btn-p {
-      background: var(--accent);
-      color: #fff
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 3px 0 var(--accent)
     }
 
     .btn-p:hover {
-      filter: brightness(1.08)
+      background: #25277A
     }
 
     .btn-o {
-      border-color: var(--ink);
-      color: var(--ink);
+      border-color: var(--primary);
+      color: var(--primary);
       background: transparent
     }
 
     .btn-o:hover {
-      background: var(--ink);
-      color: var(--bg)
+      background: var(--primary);
+      color: #fff
     }
 
     :focus-visible {
@@ -207,8 +175,8 @@
 
     /* demo ribbon */
     .ribbon {
-      background: var(--ink);
-      color: var(--bg);
+      background: var(--band);
+      color: var(--band-ink);
       font-size: .82rem;
       text-align: center;
       padding: 7px 16px
@@ -220,7 +188,7 @@
       top: env(safe-area-inset-top, 0px);
       z-index: 5;
       background: var(--surface);
-      border-bottom: 1px solid var(--line)
+      border-bottom: 3px solid var(--accent)
     }
 
     header.bar .wrap {
@@ -233,16 +201,14 @@
     }
 
     .logo {
-      font-family: var(--display);
-      font-weight: 800;
-      font-size: 1.45rem;
-      letter-spacing: -.02em;
-      text-decoration: none;
-      color: var(--primary)
+      display: block;
+      line-height: 0
     }
 
-    .logo span {
-      color: var(--accent)
+    .logo img {
+      display: block;
+      height: 52px;
+      width: auto
     }
 
     nav {
@@ -272,8 +238,10 @@
 
     /* hero */
     .hero {
-      padding-block: 48px 56px;
-      background: var(--surface);
+      padding-block: 56px 64px;
+      background:
+        radial-gradient(60% 80% at 100% 0%, rgba(143, 211, 244, .45), transparent 70%),
+        linear-gradient(180deg, #fff, var(--tint));
       border-bottom: 1px solid var(--line)
     }
 
@@ -292,7 +260,8 @@
 
     .hero h1 em {
       font-style: normal;
-      color: var(--primary)
+      color: var(--primary);
+      background: linear-gradient(transparent 68%, var(--sky) 68%)
     }
 
     .hero .sub {
@@ -323,7 +292,9 @@
       padding: 14px 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--bg)
+      background: var(--surface);
+      border-left: 5px solid var(--accent);
+      box-shadow: 0 6px 18px rgba(46, 49, 146, .08)
     }
 
     .hello b {
@@ -348,7 +319,7 @@
     }
 
     .hello div:nth-child(2) b {
-      color: var(--accent)
+      color: var(--accent-ink)
     }
 
     /* languages */
@@ -377,6 +348,10 @@
       display: grid;
       gap: 12px;
       min-width: 0
+    }
+
+    .lang {
+      border-top: 4px solid var(--accent)
     }
 
     .lang .glyph {
@@ -536,7 +511,7 @@
       font-style: normal;
       font-family: var(--display);
       font-weight: 800;
-      color: var(--accent)
+      color: var(--accent-ink)
     }
 
     .why li b {
@@ -556,7 +531,7 @@
     }
 
     .visit .eyebrow {
-      color: #FFB49C
+      color: var(--sky)
     }
 
     .visit .cols {
@@ -682,7 +657,16 @@
     footer {
       padding-block: 34px;
       font-size: .92rem;
-      color: var(--muted)
+      color: var(--muted);
+      background: var(--surface);
+      border-top: 3px solid var(--accent)
+    }
+
+    footer .brand img {
+      display: block;
+      height: 56px;
+      width: auto;
+      margin-bottom: 12px
     }
 
     footer .wrap {
@@ -782,8 +766,8 @@
         padding-block: 10px
       }
 
-      .logo {
-        font-size: 1.3rem
+      .logo img {
+        height: 44px
       }
 
       /* logo and Enquire button share the first row, text links scroll on the second */
@@ -892,11 +876,11 @@
   </style>
 
   <div class="ribbon">Design preview for Prof. C. Uchechukwu. Text, fees and address come from realiss.org today.
-    Photos, logo and colours are placeholders until brand files are supplied.</div>
+    Photos are placeholders until supplied.</div>
 
   <header class="bar">
     <div class="wrap">
-      <a class="logo" href="#top">Real<span>iss</span></a>
+      <a class="logo" href="#top" aria-label="Realiss Language School, home"><img src="logo_big.webp" alt="Realiss Language School" width="768" height="360"></a>
       <nav aria-label="Main">
         <a href="#languages">Languages</a>
         <a href="#courses">Courses</a>
@@ -1096,7 +1080,7 @@
     <div class="wrap">
       <div><a href="#languages">Languages</a><a href="#courses">Courses</a><a href="#about">About</a><a
           href="#contact">Contact</a><a href="#top">Privacy Policy</a></div>
-      <div>© Realiss Language School, Awka</div>
+      <div class="brand"><img src="logo_small.webp" alt="Realiss Language School" width="640" height="580">© Realiss Language School, Awka</div>
     </div>
   </footer>
 
