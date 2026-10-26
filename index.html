@@ -479,6 +479,34 @@
       color: var(--primary)
     }
 
+    .muted {
+      color: var(--muted)
+    }
+
+    .album {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px
+    }
+
+    .album figure {
+      margin: 0;
+      aspect-ratio: 4/3;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      border: 2px dashed var(--accent);
+      background: var(--surface);
+      color: var(--accent-ink);
+      font-weight: 600
+    }
+
+    @media (max-width:640px) {
+      .album {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
     /* why */
     .why {
       display: grid;
@@ -884,6 +912,8 @@
       <nav aria-label="Main">
         <a href="#languages">Languages</a>
         <a href="#courses">Courses</a>
+        <a href="#cooperation">International cooperation</a>
+        <a href="#album">Album</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <a class="btn btn-p" href="#enquire">Enquire now</a>
@@ -993,6 +1023,49 @@
       </div>
     </section>
 
+    <section id="cooperation">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">International cooperation</p>
+          <h2>Working with partners beyond Nigeria</h2>
+          <p>Partner institutions and exam bodies help us offer recognised certification. Details of current partners
+            will be added here.</p>
+        </div>
+        <div class="grid3">
+          <article class="course">
+            <h3>Partner institutions</h3>
+            <p class="muted">Schools, universities and cultural centres we work with. Placeholder until the list is supplied.</p>
+          </article>
+          <article class="course">
+            <h3>Recognised exams</h3>
+            <p class="muted">CEFR levels for German, Spanish and French, and HSK for Chinese.</p>
+          </article>
+          <article class="course">
+            <h3>Exchange and study abroad</h3>
+            <p class="muted">Information on exchange programmes will be added here. <a href="#enquire">Ask us</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="album" class="band">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Album</p>
+          <h2>Life at Realiss</h2>
+          <p>Classes, events and moments from the school. Photos will be added here.</p>
+        </div>
+        <div class="album">
+          <figure>Photo 1</figure>
+          <figure>Photo 2</figure>
+          <figure>Photo 3</figure>
+          <figure>Photo 4</figure>
+          <figure>Photo 5</figure>
+          <figure>Photo 6</figure>
+        </div>
+      </div>
+    </section>
+
     <section id="about">
       <div class="wrap why">
         <div class="head" style="margin:0">
@@ -1078,7 +1151,7 @@
 
   <footer>
     <div class="wrap">
-      <div><a href="#languages">Languages</a><a href="#courses">Courses</a><a href="#about">About</a><a
+      <div><a href="#languages">Languages</a><a href="#courses">Courses</a><a href="#cooperation">International cooperation</a><a href="#album">Album</a><a href="#about">About</a><a
           href="#contact">Contact</a><a href="#top">Privacy Policy</a></div>
       <div class="brand"><img src="logo_small.webp" alt="Realiss Language School" width="640" height="580">© Realiss Language School, Awka</div>
     </div>
