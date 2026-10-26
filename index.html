@@ -483,30 +483,77 @@
       color: var(--muted)
     }
 
-    .album {
+    .albums,
+    .photos {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px
+      gap: 16px
     }
 
-    .album figure {
-      margin: 0;
+    .album-card {
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink)
+    }
+
+    .album-card:hover {
+      border-color: var(--accent)
+    }
+
+    .ph {
       aspect-ratio: 4/3;
       display: grid;
       place-items: center;
-      border-radius: 10px;
       border: 2px dashed var(--accent);
       background: var(--surface);
       color: var(--accent-ink);
-      font-weight: 600
+      font-weight: 600;
+      border-radius: 10px
+    }
+
+    .album-card .ph {
+      border: 0;
+      border-bottom: 2px dashed var(--accent);
+      border-radius: 0;
+      background: var(--tint)
+    }
+
+    .album-card span {
+      display: block;
+      padding: 14px 16px
+    }
+
+    .album-card b {
+      display: block;
+      font-family: var(--display);
+      font-size: 1.1rem
+    }
+
+    .album-card small {
+      color: var(--muted)
+    }
+
+    .album-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px
     }
 
     @media (max-width:640px) {
-      .album {
+
+      .albums,
+      .photos {
         grid-template-columns: repeat(2, 1fr)
       }
     }
-
     /* why */
     .why {
       display: grid;
@@ -913,7 +960,7 @@
         <a href="#languages">Languages</a>
         <a href="#courses">Courses</a>
         <a href="#cooperation">International cooperation</a>
-        <a href="#album">Album</a>
+        <a href="#gallery">Gallery</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <a class="btn btn-p" href="#enquire">Enquire now</a>
@@ -1048,20 +1095,20 @@
       </div>
     </section>
 
-    <section id="album" class="band">
+    <section id="gallery" class="band">
       <div class="wrap">
         <div class="head">
-          <p class="eyebrow">Album</p>
+          <p class="eyebrow">Gallery</p>
           <h2>Life at Realiss</h2>
-          <p>Classes, events and moments from the school. Photos will be added here.</p>
+          <p>Browse our albums of classes, events and moments from the school. Photos will replace the placeholders.</p>
         </div>
-        <div class="album">
-          <figure>Photo 1</figure>
-          <figure>Photo 2</figure>
-          <figure>Photo 3</figure>
-          <figure>Photo 4</figure>
-          <figure>Photo 5</figure>
-          <figure>Photo 6</figure>
+        <div class="albums" id="albums" role="list"></div>
+        <div id="album-view" hidden>
+          <div class="album-bar">
+            <button class="btn btn-o" type="button" id="album-back">&larr; All albums</button>
+            <h3 id="album-title"></h3>
+          </div>
+          <div class="photos" id="photos"></div>
         </div>
       </div>
     </section>
@@ -1151,7 +1198,7 @@
 
   <footer>
     <div class="wrap">
-      <div><a href="#languages">Languages</a><a href="#courses">Courses</a><a href="#cooperation">International cooperation</a><a href="#album">Album</a><a href="#about">About</a><a
+      <div><a href="#languages">Languages</a><a href="#courses">Courses</a><a href="#cooperation">International cooperation</a><a href="#gallery">Gallery</a><a href="#about">About</a><a
           href="#contact">Contact</a><a href="#top">Privacy Policy</a></div>
       <div class="brand"><img src="logo_small.webp" alt="Realiss Language School" width="640" height="580">© Realiss Language School, Awka</div>
     </div>
@@ -1161,6 +1208,34 @@
     document.getElementById('enquire').addEventListener('submit', function (ev) {
       ev.preventDefault();
       document.getElementById('sent').classList.add('on');
+    });
+    // Gallery: each album has a title and a list of photos. Set src to a real image path to replace a placeholder.
+    var ALBUMS = [
+      { title: 'Classroom life', photos: [{}, {}, {}, {}, {}, {}] },
+      { title: 'Events', photos: [{}, {}, {}, {}] },
+      { title: 'Our building', photos: [{}, {}, {}, {}, {}] }
+    ];
+    var albumsEl = document.getElementById('albums'), viewEl = document.getElementById('album-view');
+    function tile(p, label) {
+      if (p.src) return '<img src="' + p.src + '" alt="' + (p.alt || label) + '" loading="lazy" style="border-radius:10px;width:100%;aspect-ratio:4/3;object-fit:cover">';
+      return '<div class="ph">' + label + '</div>';
+    }
+    ALBUMS.forEach(function (a, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'album-card'; b.setAttribute('role', 'listitem');
+      b.innerHTML = tile(a.photos[0] || {}, 'Cover') + '<span><b>' + a.title + '</b><small>' + a.photos.length + ' photos</small></span>';
+      b.addEventListener('click', function () { openAlbum(i); });
+      albumsEl.appendChild(b);
+    });
+    function openAlbum(i) {
+      var a = ALBUMS[i];
+      document.getElementById('album-title').textContent = a.title;
+      document.getElementById('photos').innerHTML = a.photos.map(function (p, n) { return tile(p, a.title + ' ' + (n + 1)); }).join('');
+      albumsEl.hidden = true; viewEl.hidden = false;
+      viewEl.scrollIntoView({ block: 'nearest' });
+    }
+    document.getElementById('album-back').addEventListener('click', function () {
+      viewEl.hidden = true; albumsEl.hidden = false;
     });
   </script>
 
